@@ -64,9 +64,9 @@ client.on(Events.InteractionCreate,(interaction)=>{
 
 client.on(Events.GuildMemberAdd, (member)=>{
     const welcomeEmbed = channelWelcomeEmbed(member.user.globalName, member.guild);
-    const dmWelcomeEmbed = dmWelcomeEmbed(member.user.globalName, member.guild);
+    const pmWelcomeEmbed = dmWelcomeEmbed(member.user.globalName, member.guild);
     client.channels.cache.get(process.env.WELCOME_CHANNEL_ID).send({embeds:[welcomeEmbed]});
-    member.send({embeds:[dmWelcomeEmbed]});
+    member.send({embeds:[pmWelcomeEmbed]});
 })
 
 
