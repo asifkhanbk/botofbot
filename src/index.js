@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { Client, GatewayIntentBits, Events, Message } = require("discord.js");
+const { channelWelcomeEmbed,dmWelcomeEmbed } = require('./embeds/welcomeEmbeds');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers] });
 
@@ -36,7 +37,9 @@ client.on(Events.MessageCreate, (message) =>{
 client.on(Events.InteractionCreate,(interaction)=>{
     if(!interaction.isChatInputCommand()) return;
     if (interaction.commandName==='hi'){
+        //  const welcomeEmbed = createWelcomeEmbed(interaction.user.globalName, interaction.guild);
         console.log(`${interaction.user.globalName} used /hi`);
+        //  interaction.reply({embeds:[welcomeEmbed]});
         interaction.reply(`Hi, ${interaction.user.globalName}`);
     }
     if (interaction.commandName==='ping'){
@@ -60,8 +63,10 @@ client.on(Events.InteractionCreate,(interaction)=>{
 })
 
 client.on(Events.GuildMemberAdd, (member)=>{
-    console.log(member);
-    member.send(`Hi ${member}, Welcome to ${member.guild}`)
+    const welcomeEmbed = channelWelcomeEmbed(member.user.globalName, member.guild);
+    const dmWelcomeEmbed = dmWelcomeEmbed(member.user.globalName, member.guild);
+    client.channels.cache.get(process.env.WELCOME_CHANNEL_ID).send({embeds:[welcomeEmbed]});
+    member.send({embeds:[dmWelcomeEmbed]});
 })
 
 
