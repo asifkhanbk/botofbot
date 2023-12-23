@@ -45,14 +45,30 @@ const commands = [
 
 ];
 
-(async () => {
+// (async () => {
+//   try {
+//     console.log(`Registering Slash Commands`);
+//     await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), {
+//       body: commands,
+//     });
+//     console.log(`Commands Registered Successfully`);
+//   } catch (error) {
+//     console.error(`Error: ${error.message}`);
+//   }
+// })();
+
+function registerCommands(){
   try {
-    console.log(`Registering Slash Commands`);
-    await rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), {
-      body: commands,
-    });
-    console.log(`Commands Registered Successfully`);
+    console.log(`Registering Slash Commands..!!`)
+    rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), {
+       body: commands,      
+})
+console.log(`Commands Registered Successfully..!!`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
   }
-})();
+}
+
+module.exports = {
+  registerCommands
+}
