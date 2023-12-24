@@ -62,66 +62,27 @@ client.on(Events.MessageCreate, (message) => {
   }
 });
 
-client.on(
-  Events.InteractionCreate,
-
-  (interaction) => {
-    // commandHandler(interaction);
+client.on(Events.InteractionCreate, (interaction) => {
+  try {
     if (!interaction.isChatInputCommand()) return;
-    if (interaction.commandName === "hi") {
-      //  const welcomeEmbed = createWelcomeEmbed(interaction.user.globalName, interaction.guild);
-      console.log(`${interaction.user.globalName} used /hi`);
-      //  interaction.reply({embeds:[welcomeEmbed]});
-      interaction.reply(`Hi, ${interaction.user.globalName}`);
+    else {
+      commandHandler(interaction);
     }
-    if (interaction.commandName === "ping") {
-      console.log(`${interaction.user.globalName} used /ping`);
-      interaction.reply("Pong...!!!!");
-      return;
-    }
-    if (interaction.commandName === "yt") {
-      console.log(`${interaction.user.globalName} used /yt`);
-      interaction.reply(
-        `Check and Subscribe to \n ${process.env.CHANNEL_LINK}`
-      );
-    }
-    if (interaction.commandName === "add") {
-      const num1 = interaction.options.get("first-number").value;
-      const num2 = interaction.options.get("second-number").value;
-      interaction.reply(`The sum is ${num1 + num2}`);
-    }
-    if (interaction.commandName === "invite") {
-      const link = "https://discord.gg/BHrKhWh";
-      interaction.reply(`Invite link for ${interaction.guild}\n ${link}`);
-      console.log(`${interaction.user.globalName} used /invite`);
-    }
-    if (interaction.commandName === "play") {
-      const voiceChannel = interaction.member.voice.channel;
-      const url = interaction.options.getString("url");
-      if (!voiceChannel) {
-        interaction.reply(
-          "You need to join a voice channel to use this command."
-        );
-      } else {
-        handlePlay(interaction, voiceChannel, url);
-      }
-    }
-
-    client.on(Events.GuildMemberAdd, (member) => {
-      const welcomeEmbed = channelWelcomeEmbed(
-        member.user.globalName,
-        member.guild
-      );
-      const pmWelcomeEmbed = dmWelcomeEmbed(
-        member.user.globalName,
-        member.guild
-      );
-      client.channels.cache
-        .get(process.env.WELCOME_CHANNEL_ID)
-        .send({ embeds: [welcomeEmbed] });
-      member.send({ embeds: [pmWelcomeEmbed] });
-    });
+  } catch (error) {
+    console.log(error.message);
   }
-);
+
+  client.on(Events.GuildMemberAdd, (member) => {
+    const welcomeEmbed = channelWelcomeEmbed(
+      member.user.globalName,
+      member.guild
+    );
+    const pmWelcomeEmbed = dmWelcomeEmbed(member.user.globalName, member.guild);
+    client.channels.cache
+      .get(process.env.WELCOME_CHANNEL_ID)
+      .send({ embeds: [welcomeEmbed] });
+    member.send({ embeds: [pmWelcomeEmbed] });
+  });
+});
 
 client.login(process.env.TOKEN);

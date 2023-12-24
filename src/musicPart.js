@@ -32,7 +32,7 @@ async function handlePlay(interaction, voiceChannel, url) {
       title: search.videoDetails.title,
       url: search.videoDetails.video_url,
     };
-    console.log(song);
+    console.log("Song details fetched.");
     const audioStreamURL = ytdl.chooseFormat(search.formats, {
       quality: "highestaudio",
     }).url;
@@ -43,11 +43,11 @@ async function handlePlay(interaction, voiceChannel, url) {
     audioPlayer.play(resource);
     connection.subscribe(audioPlayer);
     audioPlayer.on(AudioPlayerStatus.Playing, () => {
-      console.log(`Playing`);
+      console.log(`Playing ${song.title}`);
     });
 
     audioPlayer.on(AudioPlayerStatus.Buffering, () => {
-      console.log("Bufferingg");
+      console.log("Buffering");
     });
 
     interaction.reply(
