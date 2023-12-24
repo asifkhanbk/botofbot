@@ -1,7 +1,14 @@
 const { commandsList } = require("./Commands.Config");
-const { handlePlay } = require("./musicPart");
+const {
+  handlePlay,
+  handleStop,
+  handlePause,
+  handleResume,
+} = require("./musicPart");
 
+//Area for implementing the logic for the command || The command should be registered before implementing
 function commandHandler(interaction) {
+  const voiceChannel = interaction.member.voice.channel;
   switch (interaction.commandName.toLowerCase()) {
     case commandsList.ping:
       console.log(`${interaction.user.globalName} used /ping`);
@@ -30,7 +37,6 @@ function commandHandler(interaction) {
       console.log(`${interaction.user.globalName} used /invite`);
       break;
     case commandsList.play:
-      const voiceChannel = interaction.member.voice.channel;
       const url = interaction.options.getString("url");
       if (!voiceChannel) {
         interaction.reply(
@@ -40,7 +46,15 @@ function commandHandler(interaction) {
         handlePlay(interaction, voiceChannel, url);
       }
       break;
-
+    case commandsList.stop:
+      handleStop(interaction);
+      break;
+    case commandsList.pause:
+      handlePause(interaction, voiceChannel);
+      break;
+    case commandsList.resume:
+      handleResume(interaction, voiceChannel);
+      break;
     default:
       interaction.reply("Please enter a valid command");
       break;

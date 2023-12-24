@@ -1,3 +1,4 @@
+//Register the commands first here
 const commandsList = {
   ping: "ping",
   hi: "hi",
@@ -5,6 +6,9 @@ const commandsList = {
   add: "add",
   invte: "invite",
   play: "play",
+  stop: "stop",
+  pause: "pause",
+  resume: "resume",
 };
 
 module.exports = {

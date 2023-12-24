@@ -54,12 +54,24 @@ const commands = [
       },
     ],
   },
+  {
+    name: "stop",
+    description: "Stop currently playing music.",
+  },
+  {
+    name: "pause",
+    description: "Pauses currently playing music.",
+  },
+  {
+    name: "resume",
+    description: "Resumes paused music.",
+  },
 ];
 
-async function registerCommands() {
+function registerCommands() {
   try {
     console.log(`Registering Slash Commands..!!`);
-    await rest.put(
+    rest.put(
       Routes.applicationGuildCommands(
         process.env.CLIENT_ID,
         process.env.GUILD_ID
