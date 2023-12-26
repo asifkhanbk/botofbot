@@ -66,6 +66,24 @@ const commands = [
     name: "resume",
     description: "Resumes paused music.",
   },
+  {
+    name: "announce",
+    description: "Announces to the announcement channel",
+    options: [
+      {
+        name: "message",
+        description: "Enter your message",
+        required: true,
+        type: ApplicationCommandOptionType.String,
+      },
+      {
+        name: "url",
+        description: "Type in image url",
+        required: false,
+        type: ApplicationCommandOptionType.String,
+      },
+    ],
+  },
 ];
 
 function registerCommands() {

@@ -26,7 +26,7 @@ const client = new Client({
     GatewayIntentBits.GuildVoiceStates,
   ],
 });
-
+const { handleAnnounce } = require("./commands/commandFuncs");
 client.once(Events.ClientReady, (readyClient) => {
   registerCommands();
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);

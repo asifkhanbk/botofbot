@@ -5,6 +5,7 @@ const {
   handlePause,
   handleResume,
 } = require("./musicPart");
+const { handleAnnounce } = require("./commands/commandFuncs");
 
 //Area for implementing the logic for the command || The command should be registered before implementing
 function commandHandler(interaction) {
@@ -54,6 +55,11 @@ function commandHandler(interaction) {
       break;
     case commandsList.resume:
       handleResume(interaction, voiceChannel);
+      break;
+    case commandsList.announce:
+      const message = interaction.options.getString("message");
+      const urlImage = interaction.options.getString("url");
+      handleAnnounce(interaction, message, urlImage);
       break;
     default:
       interaction.reply("Please enter a valid command");

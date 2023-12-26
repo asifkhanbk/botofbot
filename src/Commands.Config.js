@@ -9,6 +9,7 @@ const commandsList = {
   stop: "stop",
   pause: "pause",
   resume: "resume",
+  announce: "announce",
 };
 
 module.exports = {
