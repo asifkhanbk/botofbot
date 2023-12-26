@@ -6,9 +6,10 @@ function announceEmbed(message, url) {
     .setTitle(message)
     .setImage(url)
     .setFooter({
-      text: "With Love BOT Gamer..",
+      text: "- BOT Gamer",
     });
 }
+
 module.exports = {
   announceEmbed,
 };
