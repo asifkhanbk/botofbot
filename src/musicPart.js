@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Client, GatewayIntentBits, Events, Message } = require("discord.js");
 const client = new Client({
   intents: [
@@ -9,6 +10,7 @@ const client = new Client({
   ],
 });
 const { Player, QueryType } = require("discord-player");
+const { google } = require("googleapis");
 const {
   joinVoiceChannel,
   AudioPlayerStatus,
@@ -37,6 +39,32 @@ function connectionEstablish(voiceChannel) {
     return connection;
   } catch (error) {
     console.log(error);
+  }
+}
+
+const youtube = google.youtube({
+  version: "v3",
+  auth: process.env.YT_API_KEY,
+});
+
+//Function for searching and finding youtube url for the song using Song name
+async function obtainYtLink(songName) {
+  try {
+    const response = await youtube.search.list({
+      part: "snippet",
+      maxResults: 1,
+      q: songName,
+      type: "video",
+    });
+    if (response.data.items.length > 0) {
+      const videoId = response.data.items[0].id.videoId;
+      return `https://www.youtube.com/watch?v=${videoId}`;
+    } else {
+      return "No results found";
+    }
+  } catch (error) {
+    console.log("Youtube search error: ", error.message);
+    return `Youtube search error`;
   }
 }
 
@@ -90,8 +118,9 @@ function forPlayingAndAudioPlayerCreation(resource, connection, guildId) {
 }
 
 //Function for handling /play command
-async function handlePlay(interaction, voiceChannel, url) {
+async function handlePlay(interaction, voiceChannel, songName) {
   const connection = connectionEstablish(voiceChannel);
+  const url = await obtainYtLink(songName);
   const search = await searchSong(url);
   const guildId = voiceChannel.guild.id;
   try {

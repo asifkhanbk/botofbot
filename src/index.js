@@ -16,6 +16,7 @@ const {
 const ytdl = require("ytdl-core");
 const { handlePlay } = require("./musicPart");
 const { commandHandler } = require("./CommandHandler");
+const { newsFetch } = require("./commands/newsFetch");
 
 const client = new Client({
   intents: [
@@ -56,6 +57,14 @@ client.on(Events.MessageCreate, (message) => {
       mentionedUser.send(
         `You are mentioned in ${message.channel} by ${message.author}`
       );
+    }
+    if (message.content.toLowerCase() === "!news") {
+      try {
+        // message.channel.send(newsFetch());
+        const news = newsFetch(message);
+      } catch (error) {
+        console.error(error);
+      }
     }
   } else {
     return;

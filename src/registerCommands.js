@@ -47,8 +47,8 @@ const commands = [
     description: "Play Music",
     options: [
       {
-        name: "url",
-        description: "URL of the song",
+        name: "songname",
+        description: "Name of the song",
         type: ApplicationCommandOptionType.String,
         required: true,
       },

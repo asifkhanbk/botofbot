@@ -38,13 +38,13 @@ function commandHandler(interaction) {
       console.log(`${interaction.user.globalName} used /invite`);
       break;
     case commandsList.play:
-      const url = interaction.options.getString("url");
+      const songName = interaction.options.getString("songname");
       if (!voiceChannel) {
         interaction.reply(
           "You need to join a voice channel to use this command."
         );
       } else {
-        handlePlay(interaction, voiceChannel, url);
+        handlePlay(interaction, voiceChannel, songName);
       }
       break;
     case commandsList.stop:
