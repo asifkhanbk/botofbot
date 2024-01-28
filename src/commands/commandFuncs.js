@@ -12,7 +12,7 @@ const client = new Client({
 const { announceEmbed } = require("../embeds/announceEmbeds");
 
 function handleAnnounce(interaction, message, url) {
-  const channel = client.channels.fetch(process.env.ADMIN_CHANNEL_ID);
+  const channel = client.channels.fetch(process.env.ANNOUNCEMENT_CHANNEL_ID);
   if (interaction.member.roles.cache.has(process.env.ANNOUNCEMENT_ROLE_ID)) {
     channel.then((channel) => {
       channel.send("@everyone");

@@ -26,6 +26,7 @@ const ytdl = require("ytdl-core");
 
 const guildAudioPlayers = new Map();
 let isPaused = false;
+let isPlaying = false;
 
 //Function for connecting the bot to user's voice channel
 function connectionEstablish(voiceChannel) {
@@ -135,12 +136,14 @@ async function handlePlay(interaction, voiceChannel, songName) {
       connection,
       guildId
     );
+    isPlaying = true;
     isPaused = false;
+
     audioPlayer.on(AudioPlayerStatus.Playing, () => {
       console.log(`Playing ${song.title}`);
     });
-    audioPlayer.on(AudioPlayerStatus.Buffering, () => {
-      console.log("Buffering");
+    audioPlayer.on(AudioPlayerStatus.AutoPaused, () => {
+      console.log("Auto Paused");
     });
 
     interaction.reply(
@@ -158,6 +161,7 @@ function handleStop(interaction) {
     interaction.reply("Not connected to any voice channel");
   } else {
     connection.destroy();
+    isPlaying = false;
     interaction.reply("Music stopped and disconnected.");
   }
 }
@@ -173,6 +177,7 @@ function handlePause(interaction, voiceChannel) {
         console.log("Paused");
         interaction.reply("Paused");
         isPaused = pauseAudioPlayer;
+        isPlaying = false;
       } else {
         interaction.reply(`You need to play something before pausing`);
       }
@@ -194,7 +199,7 @@ function handleResume(interaction, voiceChannel) {
       if (isPaused === true) {
         audioPlayer.unpause();
         interaction.reply(`Resumed`);
-      } else if (isPaused === false) {
+      } else if (isPaused === false && isPlaying === true) {
         interaction.reply("You are already playing something");
       } else {
         interaction.reply(`Play something`);

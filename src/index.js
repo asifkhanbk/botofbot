@@ -35,22 +35,9 @@ client.once(Events.ClientReady, (readyClient) => {
 client.on(Events.MessageCreate, (message) => {
   if (!message.author.bot) {
     console.log(`Messaged User: ${message.author.globalName}`);
-    if (
-      message.content.toLowerCase() === "FUCK YOU TOO" ||
-      message.content.toLowerCase() === "FUK YOU TOO" ||
-      message.content.toLowerCase() === "FUK U TOO"
-    ) {
-      message.channel.send(`PODA ${message.author.globalName} NAARI...!!`);
-      message.author.send(`VALLA PANIYUM EDUTH JEEVIKADA..!!!!!`);
-    }
     if (message.content.toLowerCase() === "hi" && !message.author.bot) {
-      if (message.author.globalName === "moosa") {
-        message.channel.send(`Fuck you ${message.author.globalName}`);
-        message.author.send(`ULUPPUNDO NAARI...!!???`);
-      } else {
-        message.channel.send(`Hello ${message.author}, Nice to meet you`);
-        console.log(`Replied to ${message.author.globalName}`);
-      }
+      message.channel.send(`Hello ${message.author}, Nice to meet you`);
+      console.log(`Replied to ${message.author.globalName}`);
     }
     if (message.mentions.members.first()) {
       const mentionedUser = message.mentions.members.first();
